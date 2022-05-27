@@ -18,7 +18,12 @@ app.get("/", (req, res) => {
 
 app.post(
   "/emailSend",
-  cors({ origin: [`https://buildspace-ethcontract-api.herokuapp.com/`] }),
+  cors({
+    origin: [
+      `https://buildspace-ethcontract-api.herokuapp.com/`,
+      `http://localhost:${PORT}`,
+    ],
+  }),
   async (req, res) => {
     const { email, firstName, lastName, subject, content } = req.body;
 
