@@ -11,69 +11,75 @@ require("dotenv").config({
 sendgrid.setApiKey(process.env.EMAIL_PASS);
 // converts request/response to json
 app.use(express.json());
-app.use(
+
+app.get(
+  "/",
   cors({
     origin: [
       `https://buildspace-ethcontract-api.herokuapp.com/`,
       `http://localhost:3000`,
     ],
-  })
-);
-
-app.get(
-  "/",
-
+  }),
   (req, res) => {
     res.send("This is the DJ BuildSpace Ethereum Contract API");
   }
 );
 
-app.post("/emailSend", async (req, res) => {
-  const { email, firstName, lastName, subject, content } = req.body;
+app.post(
+  "/emailSend",
+  cors({
+    origin: [
+      `https://buildspace-ethcontract-api.herokuapp.com/`,
+      `http://localhost:3000`,
+    ],
+  }),
+  async (req, res) => {
+    const { email, firstName, lastName, subject, content } = req.body;
 
-  await sendgrid
-    .send({
-      from: process.env.EMAIL,
-      to: process.env.EMAIL,
-      templateId: process.env.EMAIL_ID,
-      dynamicTemplateData: {
-        email: email,
-        firstName: firstName,
-        lastName: lastName,
-        subject: subject,
-        content: content,
-      },
-    })
-    .then(
-      async () => {
-        await sendgrid
-          .send({
-            from: process.env.EMAIL,
-            to: email,
-            templateId: process.env.EMAIL_ID_TWO,
-            dynamicTemplateData: {
-              firstName: firstName,
-              lastName: lastName,
-              subject: subject,
-            },
-          })
-          .then(
-            (response) => {
-              res.status(200).send({ res: "success" });
-            },
-            (error) => {
-              res.status(400).send({
-                res: "Not successful",
-                error: error?.response?.body,
-              });
-            }
-          );
-      },
-      (error) => {
-        res.send({ res: "not successful", error: error });
-      }
-    );
-});
+    await sendgrid
+      .send({
+        from: process.env.EMAIL,
+        to: process.env.EMAIL,
+        templateId: process.env.EMAIL_ID,
+        dynamicTemplateData: {
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          subject: subject,
+          content: content,
+        },
+      })
+      .then(
+        async () => {
+          await sendgrid
+            .send({
+              from: process.env.EMAIL,
+              to: email,
+              templateId: process.env.EMAIL_ID_TWO,
+              dynamicTemplateData: {
+                firstName: firstName,
+                lastName: lastName,
+                subject: subject,
+              },
+            })
+            .then(
+              (response) => {
+                res.status(200).send({ res: "success" });
+              },
+              (error) => {
+                res.status(400).send({
+                  res: "Not successful",
+                  error: error?.response?.body,
+                });
+              }
+            );
+        },
+        (error) => {
+          res.send({ res: "not successful", error: error });
+        }
+      );
+  }
+);
 
 // set listener for express server startup
 app.listen(PORT, () => {
