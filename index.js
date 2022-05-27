@@ -15,10 +15,7 @@ app.use(express.json());
 app.get(
   "/",
   cors({
-    origin: [
-      `https://buildspace-ethcontract-api.herokuapp.com/`,
-      `http://localhost:3000`,
-    ],
+    origin: [, `http://localhost:3000`],
   }),
   (req, res) => {
     res.send("This is the DJ BuildSpace Ethereum Contract API");
@@ -28,10 +25,7 @@ app.get(
 app.post(
   "/emailSend",
   cors({
-    origin: [
-      `https://buildspace-ethcontract-api.herokuapp.com/`,
-      `http://localhost:3000`,
-    ],
+    origin: [, `http://localhost:3000`],
   }),
   async (req, res) => {
     const { email, firstName, lastName, subject, content } = req.body;
