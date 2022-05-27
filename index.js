@@ -59,18 +59,18 @@ app.post("/emailSend", async (req, res) => {
           })
           .then(
             (response) => {
-              res.status(200).send({ res: "success" });
+              res.status(200).send({ res: "Success" });
             },
             (error) => {
               res.status(400).send({
-                res: "Not successful",
+                res: "Not Successful",
                 error: error?.response?.body,
               });
             }
           );
       },
       (error) => {
-        res.send({ res: "not successful", error: error });
+        res.send({ res: "Not Successful", error: error });
       }
     );
 });
