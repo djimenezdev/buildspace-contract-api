@@ -15,8 +15,7 @@ app.use(
   cors({
     origin: [
       `http://localhost:3000`,
-      "https://
-djbuildspace-ethcontract.vercel.app",
+      "https://djbuildspace-ethcontract.vercel.app/",
     ],
   })
 );
