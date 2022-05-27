@@ -12,6 +12,10 @@ sendgrid.setApiKey(process.env.EMAIL_PASS);
 // converts request/response to json
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("This is the DJ BuildSpace Ethereum Contract API");
+});
+
 app.post(
   "/emailSend",
   cors({ origin: [`https://buildspace-ethcontract-api.herokuapp.com/`] }),
