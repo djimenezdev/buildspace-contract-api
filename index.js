@@ -15,7 +15,7 @@ app.use(
   cors({
     origin: [
       `https://buildspace-ethcontract-api.herokuapp.com/`,
-      `http://localhost:${PORT}`,
+      `http://localhost:3000`,
     ],
   })
 );
